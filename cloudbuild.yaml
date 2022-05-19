@@ -1,0 +1,16 @@
+steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  dir: './news_crawler'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - news-crawler
+  - --region=asia-southeast1
+  - --source=./
+  - --trigger-topic=crawl-news
+  - --runtime=python39
+  - --entry-point=main
+  
+options:
+  logging: CLOUD_LOGGING_ONLY
