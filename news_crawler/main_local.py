@@ -5,6 +5,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from firestore_utils import init_firebase, get_sources
 
+from news_crawler.spiders.tuoitre import TuoiTreSpider
 from news_crawler.spiders.vnexpress import VnexpressSpider
 from news_crawler.pipelines import NewsCrawlerPipeline
 
@@ -18,6 +19,7 @@ def main_local(*args, **kwargs):
     NewsCrawlerPipeline.save_spider_articles = True
 
     spiders = [
+        TuoiTreSpider,
         VnexpressSpider,
     ]
 
