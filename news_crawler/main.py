@@ -7,6 +7,7 @@ from firestore_utils import init_firebase, get_sources
 
 from news_crawler.pipelines import NewsCrawlerPipeline
 from news_crawler.spiders.tuoitre import TuoiTreSpider
+from news_crawler.spiders.nld import NguoiLaoDongSpider
 from news_crawler.spiders.vnexpress import VnexpressSpider
 
 
@@ -18,6 +19,7 @@ def main(*args, **kwargs):
     topics = get_sources()
 
     spiders = [
+        NguoiLaoDongSpider,
         TuoiTreSpider,
         VnexpressSpider,
     ]
