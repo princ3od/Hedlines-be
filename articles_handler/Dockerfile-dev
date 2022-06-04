@@ -1,0 +1,12 @@
+# Use Python37
+FROM python:3.8
+# Allow statements and log messages to immediately appear in the Knative logs
+EXPOSE 5000
+
+WORKDIR app
+
+COPY * /app/
+RUN apt-get update
+RUN pip install -r requirements.txt
+
+CMD ["python", "app.py"]

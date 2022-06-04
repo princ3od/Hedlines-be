@@ -1,0 +1,17 @@
+version: "1"
+services:
+  articles_handler:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    entrypoint:
+      - flask
+      - run
+      - --host=0.0.0.0
+    environment:
+      FLASK_DEBUG: 1
+      cred: $CRED
+      FLASK_APP: ./app.py
+      FLASK_ENV: local
+    ports: [ '5002:5000' ]
+    volumes: [ '.:/app' ]
