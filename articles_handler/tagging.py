@@ -106,7 +106,7 @@ def update_tags_in_db(existed_tags, aritcles, db: Client):
 
 
 def update_all_tags(existed_tags, db: Client):
-    db.collection("settings").document("all_tags").set(existed_tags)
+    db.collection("all_tags").document("content").set(existed_tags)
 
 
 def get_slug_from_tag(tag):

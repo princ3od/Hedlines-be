@@ -5,7 +5,8 @@ import requests
 import google.auth.transport.requests
 import google.oauth2.id_token
 
-ARTICLES_HANDLER_URL = "https://articles-handler-snsc26yzsa-as.a.run.app/handle-articles"
+ARTICLES_HANDLER_URL = "https://articles-handler-snsc26yzsa-as.a.run.app"
+ARTICLES_HANDLER_ENDPOINT = "/handle-articles"
 
 def request_task(url, data, headers):
     requests.post(url, data=data, headers=headers)
@@ -18,11 +19,11 @@ def fire_and_forget(url, data, headers):
 class ArticleHandler:
     def __init__(self):
         self.db = firestore.client()
-        self.url = ARTICLES_HANDLER_URL
+        self.url = ARTICLES_HANDLER_URL + ARTICLES_HANDLER_ENDPOINT
 
     def handle(self, articles):
         auth_req = google.auth.transport.requests.Request()
-        id_token = google.oauth2.id_token.fetch_id_token(auth_req, self.base_url)
+        id_token = google.oauth2.id_token.fetch_id_token(auth_req, ARTICLES_HANDLER_URL)
         fire_and_forget(
             self.url,
             data=json.dumps(

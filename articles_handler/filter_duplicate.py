@@ -47,21 +47,21 @@ def filter_duplicate_articles(articles_by_topic: dict) -> dict:
 
             article_content = " ".join([article["description"], article["content"]])
             target_vector = model.infer_vector(word_tokenize(article_content))
-            article_source = article["source"]["id"]
+            article_source = article["source"]
             similarities = model.docvecs.most_similar(positive=[target_vector], topn=len(articles_by_topic[topic]))
             is_print_target = False
             for similarity in similarities[1:]:
                 similar_article = articles_by_topic[topic][similarity[0]]
                 similar_percent = round(similarity[1], 6)
-                similar_article_source = similar_article["source"]["id"]
+                similar_article_source = similar_article["source"]
                 if similar_percent < 0.85:
                     break
                 if similar_article_source != article_source:
                     if not is_print_target:
-                        print(f" >> {article['title']} - {article['source']['name']}", flush=True)
+                        print(f" >> {article['title']} - {article['source']}", flush=True)
                         is_print_target = True
                     title = similar_article["title"]
-                    source = similar_article["source"]["name"]
+                    source = similar_article["source"]
                     thumbnail = similar_article["thumbnail"]
                     print(f"  ->> {title} - {similar_percent * 100} - {source}", flush=True)
                     if "similar_to" not in article.keys():

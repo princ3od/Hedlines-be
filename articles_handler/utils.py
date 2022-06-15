@@ -21,11 +21,11 @@ def upload_firestore(articles_by_topic: dict):
             article["date"] = datetime.fromisoformat(article["date"])
             article["accessed_date"] = datetime.fromisoformat(article["accessed_date"])
             arti = db.collection("articles").document(article["id"]).get()
-            if not arti.exists and (article["topic"]["is_stored"] or article["topic"]["id"] == "noi_bat"):
+            if not arti.exists:
                 db.collection("articles").document(article["id"]).set(article)
                 _upload_redis(article)
 
-            article_source = article["source"]["id"]
+            article_source = article["source"]
             if article_source not in articles_by_sources.keys():
                 articles_by_sources[article_source] = {}
             if topic not in articles_by_sources[article_source]:
