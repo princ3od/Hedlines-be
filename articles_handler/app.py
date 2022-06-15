@@ -6,7 +6,6 @@ import json
 import base64
 from flask import Flask, request
 from flask_cors import CORS
-from utils import create_task_inference
 from filter_duplicate import filter_duplicate_articles
 from utils import upload_firestore
 
