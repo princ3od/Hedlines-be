@@ -16,8 +16,6 @@ steps:
   - id: 'Deploy image to Cloud Run'
     name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
-    env: 
-    - "VERSION=$TAG_NAME"
     args:
       [
         'run',
@@ -31,7 +29,7 @@ steps:
 
 substitutions:
   _SERVICE_FOLDER: articles_handler
-  _SERVICE_NAME: articles-handler-prod
+  _SERVICE_NAME: articles-handler
 
 timeout: 1800s
 
