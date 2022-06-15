@@ -16,8 +16,8 @@ def main(*args, **kwargs):
     start_time = timeit.default_timer()
     print(">> Start crawling...", flush=True)
 
-    init_firebase()
-    topics = get_sources()
+    db = init_firebase()
+    topics = get_sources(db)
 
     spiders = [
         NguoiLaoDongSpider,
