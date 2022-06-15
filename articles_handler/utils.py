@@ -49,5 +49,5 @@ def _upload_redis(article):
     result = redis_instance.json().set(f"articles:{article['id']}", Path.rootPath(), redis_item)
     if result != True:
         return result
-    result = redis_instance.expire(f"articles:{article['id']}", 7 * 2 * 24 * 60 * 60)
+    result = redis_instance.expire(f"articles:{article['id']}", 60 * 60 * 24 * 30)
     return result
