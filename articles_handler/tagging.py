@@ -8,7 +8,7 @@ from rapidfuzz import process, fuzz
 from filter_duplicate import get_stop_words
 
 KEYWORD_LENGTH = 4
-KEYWORD_COUNT = 8
+KEYWORD_COUNT = 5
 DUPLICATE_THRESHOLD = 0.2
 LANGUAGE = "vi"
 YAKE_WINDOW_SIZE = 3
@@ -84,7 +84,7 @@ def get_existed_tags(db: Client):
     """
     Get existed tags from database
     """
-    all_tags_ref = db.collection("settings").document("all_tags")
+    all_tags_ref = db.collection("all_tags").document("content")
     if all_tags_ref.get().exists:
         existed_tags = all_tags_ref.get().to_dict()
     else:
@@ -116,7 +116,7 @@ def get_slug_from_tag(tag):
 def filter_too_short_tags(tags):
     for tag in tags:
         words = tag.split(" ")
-        if len(words) < 2 and not words[0].istitle():
+        if len(words) < 2 and not words[0].isupper():
             tags.remove(tag)
     return tags
 
