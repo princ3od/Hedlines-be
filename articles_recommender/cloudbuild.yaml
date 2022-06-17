@@ -1,6 +1,6 @@
 steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  dir: './news_crawler'
+  dir: './articles_recommender'
   args:
   - gcloud
   - functions
@@ -8,7 +8,8 @@ steps:
   - articles_recommender
   - --region=asia-southeast1
   - --source=./
-  - --trigger-topic=crawl-news
+  - --trigger-http 
+  - --allow-unauthenticated
   - --runtime=python39
   - --entry-point=recommend_articles_for_user
   
