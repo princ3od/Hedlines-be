@@ -24,7 +24,6 @@ class UserView:
         self.previous_viewed_articles = {topic: "" for topic in topics}
         self.topic_pointers = {topic: "" for topic in topics}
         self.topic_piorities = {topic: BASE_TOPIC_PIORITT for topic in topics}
-        print(self.preferences)
         for topic in topics:
             if topic in self.preferences:
                 self.topic_piorities[topic] = PREFERENCE_TOPIC_PIORITT
