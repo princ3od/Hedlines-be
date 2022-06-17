@@ -51,7 +51,8 @@ class UserView:
 
     def adjust_topic_piorities(self):
         max_piority_topic = max(self.topic_piorities, key=self.topic_piorities.get)
-        self.topic_piorities[max_piority_topic] = round(self.topic_piorities[max_piority_topic] - PIORITY_STEP, 1)
         min_piority_topic = min(self.topic_piorities, key=self.topic_piorities.get)
-        self.topic_piorities[min_piority_topic] = round(self.topic_piorities[min_piority_topic] + PIORITY_STEP, 1)
+        self.topic_piorities[max_piority_topic] = round(self.topic_piorities[max_piority_topic] - PIORITY_STEP, 1)
+        if (min_piority_topic != max_piority_topic):
+            self.topic_piorities[min_piority_topic] = round(self.topic_piorities[min_piority_topic] + PIORITY_STEP, 1)
         print(f"- Piority matrix: {self.topic_piorities}")
