@@ -68,7 +68,6 @@ def get_articles(user_view: UserView, articles_count_by_topics, topics, editors,
             article_dict.pop("liked_by", None)
             article_dict.pop("shared_by", None)
             articles.append(article_dict)
-    shuffle(articles)
     return articles
 
 
