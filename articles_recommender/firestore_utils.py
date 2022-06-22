@@ -6,7 +6,6 @@ from firebase_admin import firestore, credentials
 from google.cloud.firestore_v1 import Client
 
 from user_view import UserView
-from random import shuffle
 
 LOCAL_FIRESTORE_CREDENTIAL_PATH = "crec.json"
 
@@ -58,6 +57,13 @@ def get_articles(user_view: UserView, articles_count_by_topics, topics, editors,
         )
         for article in _articles:
             article_dict = article.to_dict()
+            tag_orders = {tag_id: tag["ordinal"] for tag_id, tag in article_dict["tags"].items()}
+            tag_orders = sorted(tag_orders, key=tag_orders.get)
+            tags = [{
+                "id": tag_id,
+                "tag": article_dict["tags"][tag_id]["tag"],
+            } for tag_id in tag_orders]
+            article_dict["tags"] = tags
             article_dict["date"] = int(article_dict["date"].timestamp() * 1000)
             article_dict["topic"] = topics[topic]
             article_dict["source"] = editors[article_dict["source"]]
@@ -68,6 +74,7 @@ def get_articles(user_view: UserView, articles_count_by_topics, topics, editors,
             article_dict["share_count"] = len(article_dict["shared_by"]) if has_share else 0
             article_dict.pop("liked_by", None)
             article_dict.pop("shared_by", None)
+            article_dict.pop("content", None)
             articles.append(article_dict)
     return articles
 
