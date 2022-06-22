@@ -21,6 +21,7 @@ def init_firebase() -> Client:
     db = firestore.client()
     return db
 
+
 def get_topics(db: Client) -> dict:
     topics = db.collection("topics").document("content").get().to_dict()
     return topics
@@ -30,8 +31,10 @@ def get_editors(db: Client) -> dict:
     editors = db.collection("editors").document("content").get().to_dict()
     return editors
 
+
 def get_article(id: str, topics, editors, db: Client, user_id=None) -> dict:
     article = db.collection("articles").document(id).get().to_dict()
+    article["date"] = int(article["date"].timestamp() * 1000)
     article["topic"] = topics[article["topic"]]
     article["source"] = editors[article["source"]]
     has_like = "liked_by" in article

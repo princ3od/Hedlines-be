@@ -58,6 +58,7 @@ def get_articles(user_view: UserView, articles_count_by_topics, topics, editors,
         )
         for article in _articles:
             article_dict = article.to_dict()
+            article["date"] = int(article["date"].timestamp() * 1000)
             article_dict["topic"] = topics[topic]
             article_dict["source"] = editors[article_dict["source"]]
             has_like = "liked_by" in article_dict

@@ -34,7 +34,7 @@ def search_articles(request):
     data = []
     for doc in result:
         article = json.loads(doc.json)
-        article["date"] = article["date"]
+        article["date"] = int(article["date"] * 1000)
         article["topic"] = topics[article["topic"]]
         article["source"] = editors[article["source"]]
         data.append(article)
