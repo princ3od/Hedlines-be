@@ -1,0 +1,17 @@
+steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  dir: './articles_fetcher'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - articles-fetcher
+  - --region=asia-southeast1
+  - --source=./
+  - --trigger-http 
+  - --allow-unauthenticated
+  - --runtime=python39
+  - --entry-point=fetch_article
+  
+options:
+  logging: CLOUD_LOGGING_ONLY

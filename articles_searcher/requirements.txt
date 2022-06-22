@@ -1,2 +1,5 @@
 redis==4.1.4
+firebase-admin==5.2.0
+google-cloud-tasks==2.8.0
+google-auth==2.6.0
 python-dotenv==0.19.2
