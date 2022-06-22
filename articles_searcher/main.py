@@ -32,4 +32,4 @@ def search_articles(request):
         article = json.loads(doc.json)
         article["date"] = datetime.fromtimestamp(article["date"])
         data.append(article)
-    return {"status": "success", "data": data}, 200
+    return {"status": "success", "count": len(data), "data": data}, 200

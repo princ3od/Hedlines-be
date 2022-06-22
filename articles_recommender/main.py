@@ -1,9 +1,10 @@
 from recommender import get_recommended_articles
 
-from firestore_utils import init_firebase, get_topics
+from firestore_utils import init_firebase, get_topics, get_editors
 
 db = init_firebase()
 topics = get_topics(db)
+editors = get_editors(db)
 
 
 def recommend_articles_for_user(request):

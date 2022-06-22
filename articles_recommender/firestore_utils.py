@@ -45,7 +45,7 @@ def update_user_view(user_view: UserView, db: Client) -> None:
     )
 
 
-def get_articles(user_view: UserView, articles_count_by_topics, topics, db: Client) -> dict:
+def get_articles(user_view: UserView, articles_count_by_topics, topics, editors,  db: Client) -> dict:
     articles = []
     for topic in topics:
         limit = articles_count_by_topics[topic]
@@ -57,7 +57,14 @@ def get_articles(user_view: UserView, articles_count_by_topics, topics, db: Clie
             else db.collection("articles").where("topic", "==", topic).order_by("date", direction=firestore.Query.DESCENDING).start_at(last_viewed_article).limit(limit).get()
         )
         for article in _articles:
-            articles.append(article.to_dict())
+            article_dict = article.to_dict()
+            article_dict["topic"] = topics[topic]
+            article_dict["source"] = editors[article_dict["source"]]
+            article_dict["like_count"] = len(article_dict["liked_by"]) if "liked_by" in article_dict else 0
+            article_dict["share_count"] = len(article_dict["shared_by"]) if "shared_by" in article_dict else 0
+            article_dict.pop("liked_by", None)
+            article_dict.pop("shared_by", None)
+            articles.append(article_dict)
     shuffle(articles)
     return articles
 
@@ -65,3 +72,7 @@ def get_articles(user_view: UserView, articles_count_by_topics, topics, db: Clie
 def get_topics(db: Client) -> dict:
     topics = db.collection("topics").document("content").get().to_dict()
     return topics
+
+def get_editors(db: Client) -> dict:
+    editors = db.collection("editors").document("content").get().to_dict()
+    return editors
