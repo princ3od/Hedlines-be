@@ -1,0 +1,17 @@
+steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  dir: './articles_searcher'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - articles-searcher
+  - --region=asia-southeast1
+  - --source=./
+  - --trigger-http 
+  - --allow-unauthenticated
+  - --runtime=python39
+  - --entry-point=search_articles
+  
+options:
+  logging: CLOUD_LOGGING_ONLY
