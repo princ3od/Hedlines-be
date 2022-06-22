@@ -5,7 +5,7 @@ steps:
   - gcloud
   - functions
   - deploy
-  - articles_recommender
+  - articles-recommender
   - --region=asia-southeast1
   - --source=./
   - --trigger-http 

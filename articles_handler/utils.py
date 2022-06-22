@@ -4,6 +4,7 @@ from firebase_admin import firestore
 from google.cloud.firestore_v1 import Client
 import redis
 from redis.commands.json.path import Path
+import readtime
 
 redis_instance = redis.Redis(
     host=os.environ["redis_host"],
@@ -20,6 +21,7 @@ def upload_firestore(articles_by_topic: dict):
         for article in articles_by_topic[topic].values():
             article["date"] = datetime.fromisoformat(article["date"])
             article["accessed_date"] = datetime.fromisoformat(article["accessed_date"])
+            article["readtime"] = get_readtime(article)
             arti = db.collection("articles").document(article["id"]).get()
             if not arti.exists:
                 db.collection("articles").document(article["id"]).set(article)
@@ -51,3 +53,6 @@ def _upload_redis(article):
         return result
     result = redis_instance.expire(f"articles:{article['id']}", 60 * 60 * 24 * 30)
     return result
+
+def get_readtime(article):
+    return readtime.of_text(article["content"]).minutes
