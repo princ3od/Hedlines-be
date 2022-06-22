@@ -29,8 +29,8 @@ def get_user_view(user_id, db: Client) -> UserView:
         user_id=user_id,
         last_visited=data["last_visited"],
         preferences=data["preferences"],
-        topic_piorities=data["topic_piorities"],
-        previous_viewed_articles=data["previous_viewed_articles"],
+        topic_piorities=data["topic_piorities"] if "topic_piorities" in data else None,
+        previous_viewed_articles=data["previous_viewed_articles"] if "previous_viewed_articles" in data else None,
     )
     return user_view
 

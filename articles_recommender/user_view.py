@@ -13,7 +13,7 @@ class UserView:
 
     def check_first_time_visit_today(self, topics):
         first_time = self.last_visited.date() != datetime.now().date()
-        if first_time:
+        if first_time or self.topic_piorities is None or self.previous_viewed_articles is None:
             self.last_visited = datetime.now()
             print("First time visit today")
             self._reset_view(topics)
