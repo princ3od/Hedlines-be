@@ -31,7 +31,7 @@ def search_articles(query_raw):
     data = []
     for doc in result:
         article = json.loads(doc.json)
-        article["date"] = datetime.fromtimestamp(article["date"])
+        article["date"] = article["date"]
         article["topic"] = topics[article["topic"]]
         article["source"] = editors[article["source"]]
         data.append(article)
