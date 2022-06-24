@@ -1,3 +1,4 @@
+from operator import itemgetter
 import os
 import json
 import base64
@@ -76,6 +77,7 @@ def get_articles(user_view: UserView, articles_count_by_topics, topics, editors,
             article_dict.pop("shared_by", None)
             article_dict.pop("content", None)
             articles.append(article_dict)
+        articles = sorted(articles, key=itemgetter('date'), reverse=True)
     return articles
 
 
