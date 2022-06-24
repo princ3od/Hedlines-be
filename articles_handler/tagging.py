@@ -29,7 +29,6 @@ def append_tags(article_by_topics: dict):
             tags = extract_tags(content, stopwords, existed_tags.values())
             article["tags"] = build_tag_structure_for_article(tags)
             update_tags_in_db(existed_tags, article, db)
-            print("Finish update tags for article: ", article["id"], flush=True)
     print("Updating all tags...", flush=True)
     update_all_tags(existed_tags, db)
     return article_by_topics

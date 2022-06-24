@@ -19,8 +19,12 @@ def upload_firestore(articles_by_topic: dict):
     articles_by_sources = {}
     for topic in articles_by_topic.keys():
         for article in articles_by_topic[topic].values():
-            if not article["date"].endswith("-07:00") and not article["date"].endswith("+07:00"):
-                article["date"] = article["date"] + "-07:00"
+            if article["date"].endswith("-07:00"):
+                article["date"] = article["date"].replace("-07:00", "+07:00")
+                print(f"Correct date for {article['id']} - {article['date']} - {article['source']}", flush=True)
+            if not article["date"].endswith("+07:00"):
+                article["date"] = article["date"] + "+07:00"
+                print(f"Correct date for {article['id']} - {article['date']} - {article['source']}", flush=True)
             article["date"] = datetime.fromisoformat(article["date"])
             article["accessed_date"] = datetime.fromisoformat(article["accessed_date"])
             article["readtime"] = get_readtime(article)
