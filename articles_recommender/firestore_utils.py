@@ -53,7 +53,7 @@ def get_articles(user_view: UserView, articles_count_by_topics, topics, editors,
         _articles = (
             db.collection("articles").where("topic", "==", topic).order_by("date", direction=firestore.Query.DESCENDING).limit(limit).get()
             if last_viewed_article is None
-            else db.collection("articles").where("topic", "==", topic).order_by("date", direction=firestore.Query.DESCENDING).start_at(last_viewed_article).limit(limit).get()
+            else db.collection("articles").where("topic", "==", topic).order_by("date", direction=firestore.Query.DESCENDING).start_after(last_viewed_article).limit(limit).get()
         )
         for article in _articles:
             article_dict = article.to_dict()
