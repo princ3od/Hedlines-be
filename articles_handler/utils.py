@@ -19,6 +19,8 @@ def upload_firestore(articles_by_topic: dict):
     articles_by_sources = {}
     for topic in articles_by_topic.keys():
         for article in articles_by_topic[topic].values():
+            if not article["date"].endswith("-07:00"):
+                article["date"] = article["date"] + "-07:00"
             article["date"] = datetime.fromisoformat(article["date"])
             article["accessed_date"] = datetime.fromisoformat(article["accessed_date"])
             article["readtime"] = get_readtime(article)
@@ -53,6 +55,7 @@ def _upload_redis(article):
         return result
     result = redis_instance.expire(f"articles:{article['id']}", 60 * 60 * 24 * 30)
     return result
+
 
 def get_readtime(article):
     return readtime.of_text(article["content"]).minutes
