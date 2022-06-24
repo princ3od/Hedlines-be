@@ -81,9 +81,13 @@ def get_articles(user_view: UserView, articles_count_by_topics, topics, editors,
 
 def get_topics(db: Client) -> dict:
     topics = db.collection("topics").document("content").get().to_dict()
+    for topic in topics:
+        topics[topic]["id"] = topic
     return topics
 
 
 def get_editors(db: Client) -> dict:
     editors = db.collection("editors").document("content").get().to_dict()
+    for editor in editors:
+        editors[editor]["id"] = editor
     return editors
